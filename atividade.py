@@ -94,6 +94,120 @@ class Gerente(Usuario):
         print(f"Email: {self.email}")
         print(f"Loja Id: {self.loja_id}")
 
+class Produto:
+    def __init__(self,nome, preco, quantidade):
+        self.nome=nome
+        self.preco=preco
+        self.quantidade=quantidade
+        self.id=str(uuid4())
+
+
+    def menu(self):
+        while True:
+            print("\n" + "="*40)
+            print("==Sistema de Produto==")
+            print("="*40)
+            print("1 - Adicionar Produto")
+            print("2 - Listar Todos os Produtos")
+            print("3 - Listar pelo Nome Produto")
+            print("4 - Listar pelo Preço Produto")
+            print("5 - Venda de Produto")
+            print("6 - Sair do Sistema")
+            
+            opcao=input ("\n Escolha Uma Opção: ")
+
+            if opcao == "1":
+                self.addproduto()
+            
+            elif opcao == "2":
+                self.listarTodos()
+            
+            elif opcao == "3":
+                self.buscarproduto()
+            
+            elif opcao == "4":
+                self.listarpreco()
+            
+            elif opcao == "5":
+                self.listarpreco()
+            
+            elif opcao == "6":
+                print("Saindo do Sistema...")
+                break
+            else:
+                print("\n")
+                print("Opção Invalida!")
+
+    def addproduto(self):
+        print("\n ---Adicionar Produto---")
+        nome=input ("Digite o Nome do Produto: ")
+        preco=float(input("Preço: R$"))
+        quantidade=int(input("Quantida de Estoque: "))
+
+        produto={ 'codigo': self.prox_produto,
+                'nome': nome,
+                'preco': preco,
+                'quantidade': quantidade}
+        
+        self.produto.append(produto)
+        self.prox_produto += 1
+        print("\n")
+        print(f"Produto {nome} Foi adicionado com sucesso! ")   
+
+    def listarTodos(self):
+        if not self.produto:
+            print("\n")
+            print("Ops! Nenhum Produto Encontrado!!!")
+            return
+        
+        print("\n" + "="*60)
+        print("LISTA DE PRODUTOS CADASTRADOS")
+        print("="*60)
+
+        for p in self.produto:
+            print(f"Codigo{p['codigo']:2}   Produto: {p['nome']:8} Valor R${p['preco']:<10.2f} Estoque: {p['quantidade']:<8}")
+    
+    def buscarproduto(self):
+        if not self.produto:
+            print("\n")
+            print("Nenhum Produto Foi Encontrado!")
+            print("\n")
+        
+        buscar=input("Digite o Nome do Produto ").lower()
+
+        encontrados = [p for p in self.produto if buscar in p['nome'].lower()]
+
+        if not encontrados:
+            print("\n" + "~"*60)
+            print(f"Nenhum produto encontrado no nome {buscar}")
+            print("~"*60)
+        else:
+            print(f"\n ---Iten encontrado no nome {buscar}---")
+
+        for p in encontrados:
+            print(f"Codigo {p['codigo']} | Produto: {p['nome']} | Valor {p['preco']:.2f} | Estoque: {p['quantidade']}")
+    
+    def listarpreco(self):
+        if not self.produto:
+            print(f"Nenhum Produto cadastrado!!")
+            return
+        
+        try:
+                minpreco= float(input("Digite o preço Minimo: R$"))
+                maxpreco= float(input("Digite o preço Maximo: R$"))
+
+                filtrados = [p for p in self.produto if minpreco <= p['preco'] <= maxpreco]
+
+                if not filtrados:
+                    print(f"Nenhum item encontrado entre o valor R${minpreco:.2f} e R${maxpreco:.2f}")
+                    return
+                
+                print(f"Produtos encontrados Entre os valores R${minpreco} e R${maxpreco}")
+                for p in filtrados:
+                    print(f"Codigo {p['codigo']} | Produto: {p['nome']} | Valor {p['preco']:.2f} | Estoque: {p['quantidade']}")
+        except ValueError:
+            print("Preço Invalidos!")
+
 # ===== DADOS INICIAIS =====
 
 # Gerentes
