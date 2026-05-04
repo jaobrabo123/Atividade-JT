@@ -74,7 +74,7 @@ class Loja:
     #     self.produtos.append(produto) #está dando erro no produto 
     def addproduto(self):
         print("\n ---Adicionar Produto---")
-        nome = input("Digite o Nome do Produto: ")
+        nome = input("Digite o Nome do Produto: ").strip()
         preco = float(input("Preço: R$"))
         quantidade = int(input("Quantidade em estoque: "))
         
@@ -107,7 +107,7 @@ class Loja:
             print("Nenhum Produto Foi Encontrado!")
             print("\n")
         
-        buscar=input("Digite o Nome do Produto ").lower()
+        buscar=input("Digite o Nome do Produto ").strip().lower()
 
         # encontrados = [p for p in self.produtos if buscar in p['nome'].lower()]
         encontrados = [p for p in self.produtos if buscar in p.nome.lower()]
@@ -168,7 +168,7 @@ class Loja:
             # print("5 - Venda de Produto")
             print("0 - Sair do Sistema")
             
-            opcao=input ("\n Escolha Uma Opção: ")
+            opcao=input("\n Escolha Uma Opção: ").strip()
 
             if opcao == "1":
                 self.addproduto()
@@ -221,99 +221,13 @@ class Produto:
         self.nome = nome
         self.preco = preco
         self.quantidade = quantidade
-        self.id =str(uuid4())
+        self.id = str(uuid4())
 
-    # def menu(self):
-    #     while True:
-    #         print("\n" + "="*40)
-    #         print("==Sistema de Produto==")
-    #         print("="*40)
-    #         print("1 - Adicionar Produto")
-    #         print("2 - Listar Todos os Produtos")
-    #         print("3 - Listar pelo Nome Produto")
-    #         print("4 - Listar pelo Preço Produto")
-    #         print("5 - Venda de Produto")
-    #         print("6 - Sair do Sistema")
-            
-    #         opcao=input ("\n Escolha Uma Opção: ")
-
-    #         if opcao == "1":
-    #             self.addproduto()
-            
-    #         elif opcao == "2":
-    #             se lf.listarTodos()
-            
-    #         elif opcao == "3":
-    #             self.buscarproduto()
-            
-    #         elif opcao == "4":
-    #             self.listarpreco()
-            
-    #         elif opcao == "5":
-    #             self.listarpreco()
-            
-    #         elif opcao == "6":
-    #             print("Saindo do Sistema...")
-    #             break
-    #         else:
-    #             print("\n")
-    #             print("Opção Invalida!")
-
-     
-
-    # def listarTodos(self):
-    #     if not self.produto:
-    #         print("\n")
-    #         print("Ops! Nenhum Produto Encontrado!!!")
-    #         return
-        
-    #     print("\n" + "="*60)
-    #     print("LISTA DE PRODUTOS CADASTRADOS")
-    #     print("="*60)
-
-    #     for p in self.produto:
-    #         print(f"Codigo{p['codigo']:2}   Produto: {p['nome']:8} Valor R${p['preco']:<10.2f} Estoque: {p['quantidade']:<8}")
-    
-    # def buscarproduto(self):
-    #     if not self.produto:
-    #         print("\n")
-    #         print("Nenhum Produto Foi Encontrado!")
-    #         print("\n")
-        
-    #     buscar=input("Digite o Nome do Produto ").lower()
-
-    #     encontrados = [p for p in self.produto if buscar in p['nome'].lower()]
-
-    #     if not encontrados:
-    #         print("\n" + "~"*60)
-    #         print(f"Nenhum produto encontrado no nome {buscar}")
-    #         print("~"*60)
-    #     else:
-    #         print(f"\n ---Iten encontrado no nome {buscar}---")
-
-    #     for p in encontrados:
-    #         print(f"Codigo {p['codigo']} | Produto: {p['nome']} | Valor {p['preco']:.2f} | Estoque: {p['quantidade']}")
-    
-    # def listarpreco(self):
-    #     if not self.produto:
-    #         print(f"Nenhum Produto cadastrado!!")
-    #         return
-        
-    #     try:
-    #             minpreco= float(input("Digite o preço Minimo: R$"))
-    #             maxpreco= float(input("Digite o preço Maximo: R$"))
-
-    #             filtrados = [p for p in self.produto if minpreco <= p['preco'] <= maxpreco]
-
-    #             if not filtrados:
-    #                 print(f"Nenhum item encontrado entre o valor R${minpreco:.2f} e R${maxpreco:.2f}")
-    #                 return
-                
-    #             print(f"Produtos encontrados Entre os valores R${minpreco} e R${maxpreco}")
-    #             for p in filtrados:
-    #                 print(f"Codigo {p['codigo']} | Produto: {p['nome']} | Valor {p['preco']:.2f} | Estoque: {p['quantidade']}")
-    #     except ValueError:
-    #         print("Preço Invalidos!")
+    def mostrar_dados(self):
+        print(f"Id: {self.id}")
+        print(f"Nome: {self.nome}")
+        print(f"Preço: {self.preco}")
+        print(f"Quantidade: {self.quantidade}")
 
 # ===== DADOS INICIAIS =====
 
@@ -328,6 +242,19 @@ c2 = Cliente("Maria", "maria@email.com", "1234", "Rua B", 500)
 # Lojas
 l1 = Loja("Loja Centro", "Eletrônicos", "Centro", "Tecnologia")
 l2 = Loja("Loja Norte", "Roupas", "Zona Norte", "Vestuário")
+
+# Produtos iniciais das lojas
+l1.produtos.extend([
+    Produto("Notebook", 3500.00, 10),
+    Produto("Mouse", 80.00, 25),
+    Produto("Teclado", 150.00, 15),
+])
+
+l2.produtos.extend([
+    Produto("Camiseta", 59.90, 30),
+    Produto("Calça Jeans", 129.90, 20),
+    Produto("Jaqueta", 199.90, 12),
+])
 
 # Relacionamentos
 l1.definir_gerente(g1)
@@ -348,15 +275,15 @@ def limpar_terminal():
 
 def cadastro():
     limpar_terminal()
-    tipo = input("Deseja se cadastrar como gerente (1) ou cliente (2): ")
-    nome = input("Digite o seu nome: ")
-    email = input("Digite o seu email: ")
-    senha = input("Digite a sua senha: ")
+    tipo = input("Deseja se cadastrar como gerente (1) ou cliente (2): ").strip()
+    nome = input("Digite o seu nome: ").strip()
+    email = input("Digite o seu email: ").strip()
+    senha = input("Digite a sua senha: ").strip()
     if tipo == '1':
         bonificacao = float(input("Digite o seu percentual de bonificacao: "))
         Gerente(nome, email, senha, bonificacao)
     else:
-        endereco = input("Digite o seu endereço: ")
+        endereco = input("Digite o seu endereço: ").strip()
         saldo = float(input("Digite o seu saldo inicial: R$"))
         Cliente(nome, email, senha, endereco, saldo)
 
@@ -365,9 +292,9 @@ def cadastro():
 def login():
     while True: 
         limpar_terminal()
-        tipo = input("Deseja logar como gerente (1) ou cliente (2): ")
-        email = input("Digite o seu email: ")
-        senha = input("Digite a sua senha: ")
+        tipo = input("Deseja logar como gerente (1) ou cliente (2): ").strip()
+        email = input("Digite o seu email: ").strip()
+        senha = input("Digite a sua senha: ").strip()
         busca = None
         for usuario in db["gerentes" if tipo == '1' else "clientes"]:
             if usuario.email == email:
@@ -400,7 +327,7 @@ def vizualizacao_gerente(you):
 1 - Ver/Cadastrar Loja
 2 - Gerenciar Produtos
 0 - Deslogar""")
-        acao = input("Digite aqui: ")
+        acao = input("Digite aqui: ").strip()
 
         match acao:
             case "1":
@@ -411,10 +338,10 @@ def vizualizacao_gerente(you):
                     minha_loja.mostrar_dados()
                 else:
                     print("\nVocê ainda não possui uma loja, vamos cadastrá-la agora")
-                    nome = input("Digite o nome da sua loja: ")
-                    descricao = input("Digite o descricao da sua loja: ")
-                    endereco = input("Digite o endereco da sua loja: ")
-                    setor = input("Digite o setor da sua loja: ")
+                    nome = input("Digite o nome da sua loja: ").strip()
+                    descricao = input("Digite o descricao da sua loja: ").strip()
+                    endereco = input("Digite o endereco da sua loja: ").strip()
+                    setor = input("Digite o setor da sua loja: ").strip()
                     nova_loja = Loja(nome, descricao, endereco, setor)
                     nova_loja.definir_gerente(you)
                     you.definir_loja(nova_loja)
@@ -444,7 +371,7 @@ def vizualizacao_cliente(you):
 4 - Ver lojas
 5 - Fazer compras
 0 - Deslogar""")
-        acao = input("Digite aqui: ")
+        acao = input("Digite aqui: ").strip()
 
         match acao:
             case "1":
@@ -478,7 +405,72 @@ def vizualizacao_cliente(you):
                     loja.mostrar_dados()
                 input("\nOK? ")
             case "5":
-                input("Em desenvolvimento")
+                while True:
+                    for loja in db["lojas"]:
+                        print()
+                        loja.mostrar_dados()
+                    id_busca = input("\nDigite o id da loja que você deseja fazer compras (0 para sair): ").strip()
+                    if id_busca == '0':
+                        break
+
+                    loja_compras = None
+                    for loja in db["lojas"]:
+                        if loja.id == id_busca:
+                            loja_compras = loja
+
+                    if loja_compras is None:
+                        limpar_terminal()
+                        print("\nNão foi encontrado nenhuma loja com esse Id\n")
+                        continue
+
+                    compra_finalizada = False
+                    while True:
+                        for produto in loja_compras.produtos:
+                            print()
+                            produto.mostrar_dados()
+
+                        id_produto = input("\nDigite o Id do produto que deseja comprar (0 para sair): ").strip()
+                        if id_produto == '0':
+                            break
+
+                        produto_compra = None
+
+                        for produto in loja_compras.produtos:
+                            if produto.id == id_produto:
+                                produto_compra = produto
+
+                        if produto_compra is None:
+                            limpar_terminal()
+                            print("\nNão foi encontrado nenhum produto com esse Id\n")
+                            continue
+
+                        quantidade = int(input("Digite a quantidade que você deseja comprar: "))
+                        if quantidade <= 0:
+                            limpar_terminal()
+                            print("\nDigite uma quantidade válida\n")
+                            continue
+                        elif quantidade > produto_compra.quantidade:
+                            limpar_terminal()
+                            print("\nNão possui essa quantidade em estoque\n")
+                            continue
+
+                        preco_total = produto_compra.preco * quantidade
+
+                        try:
+                            you.sacar_saldo(preco_total)
+                            produto.quantidade -= quantidade
+                        except ValueError as e:
+                            limpar_terminal()
+                            print(e)
+                            continue
+
+                        compra_finalizada = True
+                        break
+
+                    if compra_finalizada:
+                        input("Compra finalizada com sucesso, ok? ").strip()
+                        break
+                    
             case "0":
                 break
 
@@ -495,7 +487,7 @@ while True:
 2 - Login
 3 - Ver Lojas
 0 - Sair""")
-        acao = input("Digite aqui: ")
+        acao = input("Digite aqui: ").strip()
 
         match acao:
             case "1":
