@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "750QIHObsCs=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jp290\\Desktop\\atividade_jovemtech\\JTApp\\JTApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jp290\\.nuget\\packages\\bcrypt.net-next\\4.1.0\\bcrypt.net-next.4.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
