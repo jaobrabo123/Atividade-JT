@@ -199,9 +199,8 @@ class Loja:
         print(f"Setor: {self.setor}")
 
 class Gerente(Usuario):
-    def __init__(self, nome, email, senha, bonificacao):
+    def __init__(self, nome, email, senha):
         super().__init__(nome, email, senha)
-        self.bonificacao = bonificacao
         self.loja_id = None
         # Todo gerente criado já fica disponível para login.
         db["gerentes"].append(self)
@@ -289,8 +288,7 @@ def cadastro():
     senha = input("Digite a sua senha: ").strip()
 
     if tipo == "1":
-        bonificacao = float(input("Digite o seu percentual de bonificacao: "))
-        Gerente(nome, email, senha, bonificacao)
+        Gerente(nome, email, senha)
     else:
         endereco = input("Digite o seu endereço: ").strip()
         saldo = float(input("Digite o seu saldo inicial: R$"))
@@ -520,7 +518,7 @@ while True:
         limpar_terminal()
 
         mostrar_tracinhos(0)
-        print("JT SYSTEMS".center(40))
+        print("INOVA SYSTEMS".center(40))
         mostrar_tracinhos(1)
 
         print(

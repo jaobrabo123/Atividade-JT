@@ -435,7 +435,7 @@ namespace JTSystems
                     LimparTerminal();
 
                     MostrarTracinhos("0");
-                    Console.WriteLine("JT SYSTEMS".PadLeft(20 + "JT SYSTEMS".Length / 2));
+                    Console.WriteLine("INOVA SYSTEMS".PadLeft(20 + "INOVA SYSTEMS".Length / 2));
                     MostrarTracinhos("1");
 
                     Console.WriteLine(@"Qual ação deseja realizar?
